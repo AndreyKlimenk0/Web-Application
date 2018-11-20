@@ -3,7 +3,6 @@ from django.contrib.admin import ModelAdmin
 from exchange.models import Provide, Account, Pair, Trade, Order
 
 
-
 @admin.register(Provide)
 class ProvideAdmin(ModelAdmin):
     pass

@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Provide(models.Model):
-    pass
+class Provider(models.Model):
+    privider_id = models.IntegerField()
 
 
 class Account(models.Model):
@@ -21,22 +21,29 @@ class Pair(models.Model):
     FILL = 'Fill'
     PART_FILL = 'Part-Fill'
     CANCEL = 'Cancel'
-    FIELD_CHOICES = (
-        (FILL, 'Заполнить'),
-        (PART_FILL, 'Неполное заполнение'),
-        (CANCEL, 'Отменить')
+    Pair_FIELD_CHOICES = (
+        (FILL, 'Fill'),
+        (PART_FILL, 'Part fill'),
+        (CANCEL, 'Cancel'),
     )
     name = models.CharField(max_length=50)
-    type_trade = models.CharField(max_length=50, choices=FIELD_CHOICES)
+    type_trade = models.CharField(max_length=50, choices=Pair_FIELD_CHOICES)
 
     def __str__(self):
         return '{}, {}'.format(self.name, self.type_trade)
 
 
 class Order(models.Model):
+    CELL = 'Cell'
+    BY = 'By'
+    Order_FILED_CHOICES = (
+        (CELL, 'Cell'),
+        (BY, 'By'),
+    )
     amount = models.IntegerField()
     price = models.FloatField()
     time = models.IntegerField()
+    type_order = models.CharField(max_length=255, choices=Order_FILED_CHOICES)
     account = models.ForeignKey('Account', on_delete=models.CASCADE)
     pair = models.ForeignKey('Pair', on_delete=models.CASCADE)
 
@@ -52,7 +59,3 @@ class Trade(models.Model):
 
     def __str__(self):
         return '{}, {}, {}'.format(self.time, self.amount, self.price)
-
-
-
-
