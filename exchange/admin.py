@@ -4,7 +4,7 @@ from exchange.models import Account, Pair, Trade, Order, Provider
 
 
 @admin.register(Provider)
-class ProvideAdmin(ModelAdmin):
+class ProviderAdmin(ModelAdmin):
     pass
 
 

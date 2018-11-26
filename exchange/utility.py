@@ -26,7 +26,6 @@ async def main_loop(pair):
                 await save_trade(pair, result.data)
                 print(result.data)
 
-
 loop = asyncio.get_event_loop()
 tasks = [main_loop(crypto) for crypto in CRYPTO_PAIRS]
 loop.run_until_complete(asyncio.wait(tasks))
