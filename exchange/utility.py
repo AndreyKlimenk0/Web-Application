@@ -12,7 +12,7 @@ async def save_trade(pair, trade):
     await redis.lpush(key, trade)
 
 
-async def main_loop(pair):
+async def connect_bitfinex_websocket(pair):
     session = aiohttp.ClientSession()
     async with session.ws_connect('wss://api.bitfinex.com/ws/2') as ws:
         ws.send_str('{ "event": "subscribe", "channel": "trades", "symbol": "%s"}' % pair)
@@ -24,8 +24,7 @@ async def main_loop(pair):
             if result.data.startswith('[') and len(result.data) > 15:
                 pair = pair.lower()
                 await save_trade(pair, result.data)
-                print(result.data)
 
 loop = asyncio.get_event_loop()
-tasks = [main_loop(crypto) for crypto in CRYPTO_PAIRS]
+tasks = [connect_bitfinex_websocket(crypto) for crypto in CRYPTO_PAIRS]
 loop.run_until_complete(asyncio.wait(tasks))
