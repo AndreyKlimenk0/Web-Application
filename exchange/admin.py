@@ -22,6 +22,7 @@ class PairAdmin(ModelAdmin):
 @admin.register(Trade)
 class TradeAdmin(ModelAdmin):
     list_display = ('amount', 'price', 'time')
+    list_filter = ('time',)
 
 
 @admin.register(Order)
